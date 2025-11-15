@@ -1,0 +1,40 @@
+commit 16821ab129250decc42b5c49bc99499074dcb857 (HEAD -> main, origin/main)
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 22:40:55 2025 -0500
+
+    deleted mcrypt and added code from that file to KStream, fixed another fatal error and removed byte differences
+
+commit 90fabfa40ee9098cb19df11a1a5cdc5ccef0303f
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 22:25:24 2025 -0500
+
+    fixed errors inside mcrypt.c (-Werror=implicit-function-declaration]
+       64 |                 if (isascii(out_buffer[i])) {)
+
+commit 2860640f15c2d69e657e142852dab2136cec667f
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 22:15:38 2025 -0500
+
+    added a missing #include to mcrypt.c that was causing an error
+
+commit 10c8f333d76c8ab3afd756ab9b58b133e3b675ac
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 21:54:55 2025 -0500
+
+    added to mcrypt.c
+
+commit 30b5850d05b414b55354e7e7dbaebf3ad4692455
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 21:43:32 2025 -0500
+
+    added mcrypt.c file
+
+commit 2893653fbb31e31741ba5b2f2330f8a47e8bd518
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 21:27:34 2025 -0500
+
+    created the kstream file
+
+commit 3e0e6b5d23b27ed70d072beb4da680d91dcfa972
+Author: Grayson Louis Podey <glp6338@rit.edu>
+Date:   Fri Nov 14 21:19:29 2025 -0500
