@@ -24,10 +24,9 @@ static unsigned char next_byte(KStream kstream) {
     kstream->j = (kstream->j + kstream->S[kstream->i]);
 
     swap(&kstream->S[kstream->i], &kstream->S[kstream->j]);
-    
-    unsigned char B = kstream->S[(kstream->S[kstream->i] + 
-                                  kstream->S[kstream->j])];
-    return B;
+
+    unsigned char index = (kstream->S[kstream->i] + kstream->S[kstream->j]);
+    return kstream->S[index];
 }
 
 KStream ks_create(const char *key_filename) {
@@ -38,9 +37,8 @@ KStream ks_create(const char *key_filename) {
     }
 
     size_t bytes_read = fread(key, 1, KEY_LENGTH, key_file);
-    
     (void)fgetc(key_file); 
-    
+
     if (bytes_read != KEY_LENGTH || !feof(key_file)) {
         fprintf(stderr, "Error: Key file '%s' must be exactly %d bytes.\n",
                 key_filename, KEY_LENGTH);
@@ -55,18 +53,18 @@ KStream ks_create(const char *key_filename) {
         return NULL;
     }
 
-    kstream->i = 0;
-    kstream->j = 0;
     for (int i = 0; i < STATE_SIZE; i++) {
         kstream->S[i] = i;
     }
 
-    unsigned char j = 0;
+    kstream->j = 0;
     for (int i = 0; i < STATE_SIZE; i++) {
-        j = (j + kstream->S[i] + key[i % KEY_LENGTH]);
-        swap(&kstream->S[i], &kstream->S[j]);
+        kstream->j = (kstream->j + kstream->S[i] + key[i % KEY_LENGTH]);
+        swap(&kstream->S[i], &kstream->S[kstream->j]);
     }
-    
+
+    kstream->i = 0;
+
     for (int n = 0; n < PRIME_DISCARD; n++) {
         (void)next_byte(kstream);
     }
@@ -80,7 +78,7 @@ void ks_destroy(KStream kstream) {
 
 void ks_translate(KStream kstream, const unsigned char *in_buffer, 
                   unsigned char *out_buffer, size_t num_bytes) {
-    
+
     for (size_t n = 0; n < num_bytes; n++) {
         unsigned char key_byte = next_byte(kstream);
         out_buffer[n] = in_buffer[n] ^ key_byte;
